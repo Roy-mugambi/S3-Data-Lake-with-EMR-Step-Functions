@@ -4,8 +4,8 @@ from pyspark.sql.functions import col, to_timestamp, date_format, count, sum, av
 spark = SparkSession.builder.appName("EcommerceTransactionCustomerMetrics").getOrCreate()
 
 # Load datasets
-orders = spark.read.csv("s3://your-bucket/ecommerce/orders.csv", header=True, inferSchema=True)
-customers = spark.read.csv("s3://your-bucket/ecommerce/customers.csv", header=True, inferSchema=True)
+orders = spark.read.csv("s3://roy-music-kpis/ecommerce/orders.csv", header=True, inferSchema=True)
+customers = spark.read.csv("s3://roy-music-kpis/ecommerce/customers.csv", header=True, inferSchema=True)
 
 # Convert timestamp
 orders = orders.withColumn("order_timestamp", to_timestamp(col("order_timestamp")))
@@ -43,7 +43,7 @@ customer_metrics = (
 )
 
 # Write outputs to S3
-daily_metrics.write.parquet("s3://your-bucket/ecommerce/output/daily_order_metrics", mode="overwrite")
-customer_metrics.write.parquet("s3://your-bucket/ecommerce/output/customer_metrics", mode="overwrite")
+daily_metrics.write.parquet("s3://roy-music-kpis/ecommerce/output/daily_order_metrics", mode="overwrite")
+customer_metrics.write.parquet("s3://roy-music-kpis/ecommerce/output/customer_metrics", mode="overwrite")
 
 spark.stop()

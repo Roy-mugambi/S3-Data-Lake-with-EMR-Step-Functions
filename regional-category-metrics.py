@@ -4,9 +4,9 @@ from pyspark.sql.functions import col, to_timestamp, count, sum, avg, max, min, 
 spark = SparkSession.builder.appName("EcommerceRegionCategoryPerformance").getOrCreate()
 
 # Load datasets
-orders = spark.read.csv("s3://your-bucket/ecommerce/orders.csv", header=True, inferSchema=True)
-customers = spark.read.csv("s3://your-bucket/ecommerce/customers.csv", header=True, inferSchema=True)
-products = spark.read.csv("s3://your-bucket/ecommerce/products.csv", header=True, inferSchema=True)
+orders = spark.read.csv("s3://roy-music-kpis/ecommerce/orders.csv", header=True, inferSchema=True)
+customers = spark.read.csv("s3://roy-music-kpis/ecommerce/customers.csv", header=True, inferSchema=True)
+products = spark.read.csv("s3://roy-music-kpis/ecommerce/products.csv", header=True, inferSchema=True)
 
 # Convert timestamp
 orders = orders.withColumn("order_timestamp", to_timestamp(col("order_timestamp")))
@@ -41,7 +41,7 @@ category_metrics = (
 )
 
 # Write outputs to S3
-region_metrics.write.parquet("s3://your-bucket/ecommerce/output/region_performance_metrics", mode="overwrite")
-category_metrics.write.parquet("s3://your-bucket/ecommerce/output/category_performance_metrics", mode="overwrite")
+region_metrics.write.parquet("s3://roy-music-kpis/ecommerce/output/region_performance_metrics", mode="overwrite")
+category_metrics.write.parquet("s3://roy-music-kpis/ecommerce/output/category_performance_metrics", mode="overwrite")
 
 spark.stop()
